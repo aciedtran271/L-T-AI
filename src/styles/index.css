@@ -1,0 +1,20 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    @apply antialiased;
+  }
+  body {
+    @apply bg-gray-100 text-gray-900 dark:bg-gray-900 dark:text-gray-100;
+  }
+}
+
+/* Safe area cho iPhone */
+.safe-bottom {
+  padding-bottom: max(0.75rem, env(safe-area-inset-bottom));
+}
+.safe-top {
+  padding-top: env(safe-area-inset-top);
+}
