@@ -2,8 +2,8 @@ import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 import path from 'path';
 
-// Đổi 'loto' thành tên repo GitHub của bạn (ví dụ: username.github.io/loto)
-const repoName = 'loto';
+// Đổi 'L-T-AI' nếu đổi tên repo (URL: username.github.io/L-T-AI)
+const repoName = 'L-T-AI';
 
 export default defineConfig({
   plugins: [react()],
