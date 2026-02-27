@@ -22,7 +22,7 @@ jobs:
       - run: npm run build
         env:
           NODE_ENV: production
-          CI: "true"
+      - run: ls -la dist
       - uses: actions/upload-pages-artifact@3
         with:
           path: dist
