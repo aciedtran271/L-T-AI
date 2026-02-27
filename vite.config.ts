@@ -1,6 +1,9 @@
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 import path from 'path';
+import { fileURLToPath } from 'url';
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 // Đổi 'L-T-AI' nếu đổi tên repo (URL: username.github.io/L-T-AI)
 const repoName = 'L-T-AI';
