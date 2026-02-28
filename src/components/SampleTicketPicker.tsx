@@ -22,10 +22,19 @@ export interface SampleSheet {
 
 const baseUrl = import.meta.env.BASE_URL;
 
+/** Lấy số vé từ tên (vd: "Vé 1" -> 1, "Vé 12" -> 12) */
+function getFirstTicketNumber(sheet: SampleSheet): number {
+  const name = sheet.tickets[0]?.name ?? '';
+  const n = parseInt(name.replace(/\D/g, ''), 10);
+  return Number.isNaN(n) ? 999 : n;
+}
+
 export function SampleTicketPicker() {
   const { dispatch } = useApp();
   const tickets = sampleTickets as SampleTicket[];
-  const sheets = sampleSheets as SampleSheet[];
+  const sheets = [...(sampleSheets as SampleSheet[])].sort(
+    (a, b) => getFirstTicketNumber(a) - getFirstTicketNumber(b)
+  );
 
   const addTicket = (numbers: number[]) => {
     dispatch({ type: 'ADD_TICKET', payload: numbers });
@@ -37,15 +46,15 @@ export function SampleTicketPicker() {
 
   return (
     <div className="space-y-6">
-      {/* Tờ có sẵn (3 vé / tờ) - từ folder vé */}
+      {/* Tờ có sẵn (3 vé / tờ) - sắp xếp theo vé 1,2,3,4... hiển thị full tờ */}
       <section>
         <h3 className="text-base font-semibold text-gray-800 dark:text-gray-200 mb-2">
           Tờ có sẵn (3 vé 1 tờ)
         </h3>
         <p className="text-sm text-gray-600 dark:text-gray-400 mb-3">
-          Chọn tờ để xem ảnh và thêm từng vé hoặc thêm cả 3 vé vào chơi.
+          Sắp xếp theo vé số 1, 2, 3, 4... Chọn tờ để xem full ảnh và thêm từng vé hoặc thêm cả 3 vé.
         </p>
-        <div className="grid gap-4 sm:grid-cols-2">
+        <div className="grid gap-6 grid-cols-1">
           {sheets.map((sheet) => (
             <div
               key={sheet.id}
@@ -54,7 +63,7 @@ export function SampleTicketPicker() {
               <img
                 src={`${baseUrl}ve/${sheet.image}`}
                 alt={sheet.name}
-                className="w-full h-32 object-cover object-top bg-gray-100"
+                className="w-full object-contain bg-gray-100 max-h-[70vh]"
               />
               <div className="p-3 space-y-2">
                 <div className="flex justify-between items-center">
