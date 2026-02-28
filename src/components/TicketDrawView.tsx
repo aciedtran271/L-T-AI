@@ -116,7 +116,7 @@ export function TicketDrawView({
   return (
     <div className="fixed inset-0 z-50 flex flex-col bg-black/90 safe-top safe-bottom">
       <div className="flex items-center justify-between p-3 border-b border-gray-700">
-        <span className="font-semibold text-white">{ticketLabel} — Vẽ lên ảnh</span>
+        <span className="font-semibold text-white">Full 1 tờ — {ticketLabel} (vẽ lên ảnh)</span>
         <div className="flex gap-2">
           <button
             type="button"
@@ -134,30 +134,21 @@ export function TicketDrawView({
           </button>
         </div>
       </div>
-      <div className="flex-1 overflow-auto flex items-center justify-center p-2 min-h-0">
+      <div className="flex-1 overflow-auto flex items-start justify-center p-2 min-h-0">
         <div
           ref={containerRef}
-          className="relative w-full max-w-md mx-auto bg-gray-800 rounded-lg overflow-hidden touch-none"
-          style={{ aspectRatio: '5/7' }}
+          className="relative w-fit max-w-full touch-none"
         >
-          {/* Ảnh tờ: 1/3 tờ tương ứng vé; contain = hiển thị full vé không cắt */}
-          <div className="absolute inset-0 flex items-center justify-center bg-gray-900">
-            <img
-              src={imageUrl}
-              alt={ticketLabel}
-              className="block w-full object-contain"
-              style={{
-                height: '300%',
-                marginTop: `-${ticketIndexInSheet * 100}%`,
-                objectFit: 'contain',
-                objectPosition: 'top center',
-              }}
-            />
-          </div>
-          {/* Canvas vẽ đè lên, cùng kích thước container */}
+          {/* Full 1 tờ (cả 3 vé) như ảnh, object-contain để xem hết */}
+          <img
+            src={imageUrl}
+            alt={ticketLabel}
+            className="block max-h-[70vh] max-w-full w-auto object-contain object-top rounded-lg bg-gray-900"
+          />
+          {/* Canvas vẽ đè lên full tờ */}
           <canvas
             ref={canvasRef}
-            className="absolute inset-0 w-full h-full touch-none"
+            className="absolute inset-0 w-full h-full touch-none rounded-lg"
             style={{ pointerEvents: 'auto' }}
             onMouseDown={startDraw}
             onMouseMove={moveDraw}
