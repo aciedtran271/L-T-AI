@@ -39,12 +39,18 @@ export function SampleTicketPicker() {
     .map(sortTicketsInSheet)
     .sort((a, b) => getFirstTicketNumber(a) - getFirstTicketNumber(b));
 
-  const addTicket = (numbers: number[]) => {
-    dispatch({ type: 'ADD_TICKET', payload: numbers });
-  };
-
   const addSheet = (sheet: SampleSheet) => {
-    sheet.tickets.forEach((t) => addTicket(t.numbers));
+    const imageUrl = `${baseUrl}ve/${sheet.image}`;
+    sheet.tickets.forEach((t, i) => {
+      dispatch({
+        type: 'ADD_TICKET',
+        payload: {
+          numbers: t.numbers,
+          sheetImage: imageUrl,
+          ticketIndexInSheet: i,
+        },
+      });
+    });
   };
 
   return (

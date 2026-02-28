@@ -98,21 +98,36 @@ export function appReducer(state: AppState, action: AppAction): AppState {
       return {
         ...state,
         tickets: action.payload,
+        ticketsMeta: action.payload.map(() => ({})),
         results: checkAllTickets(action.payload, state.numbersCalled),
       };
 
-    case 'ADD_TICKET':
+    case 'ADD_TICKET': {
+      const payload = action.payload;
+      const numbers = Array.isArray(payload) ? payload : payload.numbers;
+      const meta =
+        Array.isArray(payload)
+          ? {}
+          : {
+              sheetImage: payload.sheetImage,
+              ticketIndexInSheet: payload.ticketIndexInSheet,
+            };
       return {
         ...state,
-        tickets: [...state.tickets, action.payload],
-        results: checkAllTickets([...state.tickets, action.payload], state.numbersCalled),
+        tickets: [...state.tickets, numbers],
+        ticketsMeta: [...state.ticketsMeta, meta],
+        results: checkAllTickets([...state.tickets, numbers], state.numbersCalled),
       };
+    }
 
     case 'REMOVE_TICKET': {
-      const next = state.tickets.filter((_, i) => i !== action.payload);
+      const idx = action.payload;
+      const next = state.tickets.filter((_, i) => i !== idx);
+      const nextMeta = state.ticketsMeta.filter((_, i) => i !== idx);
       return {
         ...state,
         tickets: next,
+        ticketsMeta: nextMeta,
         results: checkAllTickets(next, state.numbersCalled),
       };
     }
@@ -138,6 +153,7 @@ export const initialState: AppState = {
   speedSeconds: 5,
   speechEnabled: true,
   tickets: [],
+  ticketsMeta: [],
   results: [],
   history: [],
 };

@@ -36,6 +36,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
           speechEnabled: saved.speechEnabled ?? true,
           darkMode: saved.darkMode ?? true,
           tickets: saved.tickets ?? [],
+          ticketsMeta: saved.ticketsMeta ?? (saved.tickets?.map(() => ({})) ?? []),
         },
       });
     }
@@ -49,6 +50,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
         numbersCalled: state.numbersCalled,
         pool: state.pool,
         tickets: state.tickets,
+        ticketsMeta: state.ticketsMeta,
         speedSeconds: state.speedSeconds,
         speechEnabled: state.speechEnabled,
         darkMode: state.darkMode,
@@ -61,6 +63,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
     state.numbersCalled,
     state.pool,
     state.tickets,
+    state.ticketsMeta,
     state.speedSeconds,
     state.speechEnabled,
     state.darkMode,

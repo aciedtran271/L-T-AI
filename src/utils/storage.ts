@@ -1,10 +1,16 @@
 const KEY_STATE = 'loto-app-state';
 const KEY_HISTORY = 'loto-history';
 
+export interface PersistedTicketMeta {
+  sheetImage?: string;
+  ticketIndexInSheet?: number;
+}
+
 export interface PersistedState {
   numbersCalled: number[];
   pool: number[];
   tickets: number[][];
+  ticketsMeta?: PersistedTicketMeta[];
   speedSeconds: number;
   speechEnabled: boolean;
   darkMode: boolean;

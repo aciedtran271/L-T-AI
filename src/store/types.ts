@@ -5,6 +5,11 @@ export type TabId = 'draw' | 'tickets' | 'history';
 
 export type GameStatus = 'idle' | 'running' | 'paused' | 'finished';
 
+export interface TicketMeta {
+  sheetImage?: string;
+  ticketIndexInSheet?: number;
+}
+
 export interface AppState {
   tab: TabId;
   darkMode: boolean;
@@ -17,10 +22,15 @@ export interface AppState {
   speechEnabled: boolean;
   // Vé
   tickets: number[][];
+  ticketsMeta: TicketMeta[];
   results: TicketResult[];
   // Lịch sử (trong memory, sync từ storage khi cần)
   history: HistoryItem[];
 }
+
+export type TicketPayload =
+  | number[]
+  | { numbers: number[]; sheetImage?: string; ticketIndexInSheet?: number };
 
 export type AppAction =
   | { type: 'SET_TAB'; payload: TabId }
@@ -35,7 +45,7 @@ export type AppAction =
   | { type: 'TOGGLE_SPEECH' }
   | { type: 'SET_SPEECH'; payload: boolean }
   | { type: 'SET_TICKETS'; payload: number[][] }
-  | { type: 'ADD_TICKET'; payload: number[] }
+  | { type: 'ADD_TICKET'; payload: TicketPayload }
   | { type: 'REMOVE_TICKET'; payload: number }
   | { type: 'SET_HISTORY'; payload: HistoryItem[] }
   | { type: 'HYDRATE'; payload: Partial<AppState> };

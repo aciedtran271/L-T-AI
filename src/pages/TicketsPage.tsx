@@ -5,11 +5,13 @@ import { TicketInput } from '../components/TicketInput';
 import { ChipInput } from '../components/ChipInput';
 import { SampleTicketPicker } from '../components/SampleTicketPicker';
 import { WinModal } from '../components/WinModal';
+import { TicketDrawView } from '../components/TicketDrawView';
 
 export function TicketsPage() {
   const { state } = useApp();
   const [winModal, setWinModal] = useState<{ title: string; message: string } | null>(null);
   const [inputMode, setInputMode] = useState<'chip' | 'text' | 'sample'>('sample');
+  const [drawTicketIndex, setDrawTicketIndex] = useState<number | null>(null);
 
   const results = state.results;
 
@@ -77,16 +79,35 @@ export function TicketsPage() {
         ) : (
           <div className="space-y-4">
             {state.tickets.map((ticket, i) => (
-              <TicketCard
-                key={i}
-                ticket={ticket}
-                index={i}
-                result={results[i]}
-              />
+              <div key={i} className="space-y-2">
+                <TicketCard
+                  ticket={ticket}
+                  index={i}
+                  result={results[i]}
+                />
+                {state.ticketsMeta[i]?.sheetImage != null && (
+                  <button
+                    type="button"
+                    onClick={() => setDrawTicketIndex(i)}
+                    className="py-2 px-3 rounded-lg bg-blue-600 text-white text-sm font-medium w-full sm:w-auto"
+                  >
+                    Vẽ lên ảnh vé
+                  </button>
+                )}
+              </div>
             ))}
           </div>
         )}
       </section>
+
+      {drawTicketIndex != null && state.ticketsMeta[drawTicketIndex]?.sheetImage != null && (
+        <TicketDrawView
+          imageUrl={state.ticketsMeta[drawTicketIndex].sheetImage!}
+          ticketIndexInSheet={state.ticketsMeta[drawTicketIndex].ticketIndexInSheet ?? 0}
+          ticketLabel={`Vé #${drawTicketIndex + 1}`}
+          onClose={() => setDrawTicketIndex(null)}
+        />
+      )}
 
       {state.tickets.length > 0 && (
         <section>
