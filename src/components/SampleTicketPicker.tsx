@@ -54,37 +54,37 @@ export function SampleTicketPicker() {
         <p className="text-sm text-gray-600 dark:text-gray-400 mb-3">
           Sắp xếp theo vé số 1, 2, 3, 4... Chọn tờ để xem full ảnh và thêm từng vé hoặc thêm cả 3 vé.
         </p>
-        <div className="grid gap-6 grid-cols-1">
-          {sheets.map((sheet) => (
+        <div className="grid gap-4 sm:grid-cols-2">
+          {sheets.map((sheet, index) => (
             <div
               key={sheet.id}
               className="rounded-xl border border-gray-200 dark:border-gray-600 bg-white dark:bg-gray-800 overflow-hidden"
             >
               <img
                 src={`${baseUrl}ve/${sheet.image}`}
-                alt={sheet.name}
-                className="w-full object-contain bg-gray-100 max-h-[70vh]"
+                alt={`Tờ ${index + 1}`}
+                className="w-full object-contain bg-gray-100 max-h-[50vh]"
               />
               <div className="p-3 space-y-2">
                 <div className="flex justify-between items-center">
                   <span className="font-semibold text-gray-900 dark:text-gray-100">
-                    {sheet.name}
+                    Tờ {index + 1} ({sheet.tickets.map((t) => t.name).join(', ')})
                   </span>
                   <button
                     type="button"
                     onClick={() => addSheet(sheet)}
-                    className="py-1.5 px-3 rounded-lg bg-green-600 text-white text-sm font-medium touch-manipulation"
+                    className="py-1.5 px-3 rounded-lg bg-green-600 text-white text-sm font-medium touch-manipulation shrink-0"
                   >
                     Thêm cả 3 vé
                   </button>
                 </div>
-                <div className="flex flex-wrap gap-1">
+                <div className="grid grid-cols-2 gap-2">
                   {sheet.tickets.map((t, i) => (
                     <button
                       key={i}
                       type="button"
                       onClick={() => addTicket(t.numbers)}
-                      className="py-1 px-2 rounded bg-orange-100 dark:bg-orange-900/30 text-orange-700 dark:text-orange-300 text-xs font-medium touch-manipulation"
+                      className="py-2 px-3 rounded-lg bg-orange-100 dark:bg-orange-900/30 text-orange-700 dark:text-orange-300 text-sm font-medium touch-manipulation"
                     >
                       {t.name}
                     </button>
