@@ -134,23 +134,23 @@ export function TicketDrawView({
           </button>
         </div>
       </div>
-      <div className="flex-1 overflow-auto flex items-start justify-center p-2 min-h-0">
+      <div className="flex-1 overflow-auto flex items-center justify-center p-2 min-h-0">
         <div
           ref={containerRef}
-          className="relative max-w-lg w-full bg-gray-800 rounded-lg overflow-hidden touch-none"
-          style={{ aspectRatio: '3/4' }}
+          className="relative w-full max-w-md mx-auto bg-gray-800 rounded-lg overflow-hidden touch-none"
+          style={{ aspectRatio: '5/7' }}
         >
-          {/* Ảnh tờ: chỉ hiển thị 1/3 tương ứng vé (top / middle / bottom) */}
-          <div className="absolute inset-0 overflow-hidden">
+          {/* Ảnh tờ: 1/3 tờ tương ứng vé; contain = hiển thị full vé không cắt */}
+          <div className="absolute inset-0 flex items-center justify-center bg-gray-900">
             <img
               src={imageUrl}
               alt={ticketLabel}
-              className="block w-full"
+              className="block w-full object-contain"
               style={{
                 height: '300%',
                 marginTop: `-${ticketIndexInSheet * 100}%`,
-                objectFit: 'cover',
-                objectPosition: 'top',
+                objectFit: 'contain',
+                objectPosition: 'top center',
               }}
             />
           </div>
