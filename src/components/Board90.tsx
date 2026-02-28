@@ -59,24 +59,26 @@ export function Board90() {
         </div>
       </div>
 
-      <div className="grid grid-cols-10 gap-1 sm:gap-2">
-        {filtered.map((n) => {
-          const called = calledSet.has(n);
-          return (
-            <div
-              key={n}
-              className={`
-                aspect-square flex items-center justify-center rounded-lg text-sm font-semibold
-                ${called
-                  ? 'bg-green-500 text-white dark:bg-green-600 animate-pop'
-                  : 'bg-gray-200 text-gray-700 dark:bg-gray-700 dark:text-gray-300'
-                }
-              `}
-            >
-              {n}
-            </div>
-          );
-        })}
+      <div className="max-w-[320px] sm:max-w-[400px] md:max-w-[480px] mx-auto">
+        <div className="grid grid-cols-10 gap-0.5 sm:gap-1">
+          {filtered.map((n) => {
+            const called = calledSet.has(n);
+            return (
+              <div
+                key={n}
+                className={`
+                  aspect-square flex items-center justify-center rounded text-[10px] sm:text-xs font-semibold min-w-0
+                  ${called
+                    ? 'bg-green-500 text-white dark:bg-green-600 animate-pop'
+                    : 'bg-gray-200 text-gray-700 dark:bg-gray-700 dark:text-gray-300'
+                  }
+                `}
+              >
+                {n}
+              </div>
+            );
+          })}
+        </div>
       </div>
       {filtered.length === 0 && (
         <p className="text-center text-gray-500 dark:text-gray-400 text-sm">Không có số nào.</p>
