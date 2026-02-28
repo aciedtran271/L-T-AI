@@ -3,11 +3,13 @@ import { useApp } from '../store/context';
 import { TicketCard } from '../components/TicketCard';
 import { TicketInput } from '../components/TicketInput';
 import { ChipInput } from '../components/ChipInput';
+import { SampleTicketPicker } from '../components/SampleTicketPicker';
 import { WinModal } from '../components/WinModal';
+
 export function TicketsPage() {
   const { state } = useApp();
   const [winModal, setWinModal] = useState<{ title: string; message: string } | null>(null);
-  const [inputMode, setInputMode] = useState<'chip' | 'text'>('chip');
+  const [inputMode, setInputMode] = useState<'chip' | 'text' | 'sample'>('sample');
 
   const results = state.results;
 
@@ -32,11 +34,20 @@ export function TicketsPage() {
 
   return (
     <div className="px-4 pb-4 space-y-6">
-      <div className="flex gap-2 border-b border-gray-200 dark:border-gray-700 pb-2">
+      <div className="flex gap-2 border-b border-gray-200 dark:border-gray-700 pb-2 flex-wrap">
+        <button
+          type="button"
+          onClick={() => setInputMode('sample')}
+          className={`flex-1 min-w-[80px] py-2 rounded-xl font-medium text-sm ${
+            inputMode === 'sample' ? 'bg-orange-600 text-white' : 'bg-gray-200 dark:bg-gray-700'
+          }`}
+        >
+          Vé có sẵn
+        </button>
         <button
           type="button"
           onClick={() => setInputMode('chip')}
-          className={`flex-1 py-2 rounded-xl font-medium text-sm ${
+          className={`flex-1 min-w-[80px] py-2 rounded-xl font-medium text-sm ${
             inputMode === 'chip' ? 'bg-orange-600 text-white' : 'bg-gray-200 dark:bg-gray-700'
           }`}
         >
@@ -45,7 +56,7 @@ export function TicketsPage() {
         <button
           type="button"
           onClick={() => setInputMode('text')}
-          className={`flex-1 py-2 rounded-xl font-medium text-sm ${
+          className={`flex-1 min-w-[80px] py-2 rounded-xl font-medium text-sm ${
             inputMode === 'text' ? 'bg-orange-600 text-white' : 'bg-gray-200 dark:bg-gray-700'
           }`}
         >
@@ -53,7 +64,9 @@ export function TicketsPage() {
         </button>
       </div>
 
-      {inputMode === 'chip' ? <ChipInput /> : <TicketInput />}
+      {inputMode === 'sample' && <SampleTicketPicker />}
+      {inputMode === 'chip' && <ChipInput />}
+      {inputMode === 'text' && <TicketInput />}
 
       <section>
         <h2 className="text-lg font-semibold mb-2 text-gray-800 dark:text-gray-200">
